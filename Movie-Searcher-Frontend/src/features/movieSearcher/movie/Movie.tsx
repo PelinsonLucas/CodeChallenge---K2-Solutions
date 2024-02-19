@@ -72,7 +72,7 @@ const Movie = () => {
     return (
         <div className='noMovieContent'>
             <h3>No Movie Selected</h3>
-            <p>Select a movie from the list to see its details.</p>
+            <p>Search and select a movie to see it's details.</p>
         </div>
     )
 }

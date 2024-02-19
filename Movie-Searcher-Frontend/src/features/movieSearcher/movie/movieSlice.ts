@@ -1,6 +1,4 @@
-import type { PayloadAction } from "@reduxjs/toolkit"
 import { createAppSlice } from "../../../app/createAppSlice"
-import type { AppThunk } from "../../../app/store"
 import { fetchMovieList, fetchMovie } from "./movieAPI"
 
 export interface MovieSliceState {

@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import './MovieSearcher.scss'
 import Movie from './movie/Movie'
 import { changeMovieListAsync, selectMovieList, clearMovieList, changeMovieAsync, clearMovie } from './movie/movieSlice'
@@ -11,6 +11,14 @@ const MovieSearcher = () => {
 
     const dispatch = useAppDispatch()
     const movieList = useAppSelector(selectMovieList);
+
+    useEffect(() => {
+        document.addEventListener("click", (e) => {
+            if ((e.target as any).className !== "movieSearcher-List" && document.getElementsByClassName("movieSearcher-List")[0] !== undefined) {
+                clearList();
+            }
+        });
+    }, []);
 
     const getMovieListEnter = (e : any) => {
         if (e!==undefined) {
@@ -64,20 +72,14 @@ const MovieSearcher = () => {
             </div>
             {
                 movieList !== undefined && movieList.length > 0 ? 
-                <List className='movieSearcher-List'
-                growing="None"
-                mode="None"
-                onItemClick={(e) => selectMovie(e.detail.item.accessKey as string, e.detail.item.innerText as string)}
-                separators="All"
-                >
-                {
-                    movieList!==undefined ? 
-                    movieList.map((movie: any) => {
-                        return <StandardListItem key={movie.imdbID} accessKey={movie.imdbID}>{movie.Title}</StandardListItem>
-                    })
-                    : <p style={{display: "none"}}/>
-                }
-            </List> : <p/>
+                <List className='movieSearcher-List' growing="None" separators="All" mode="None" 
+                onItemClick={(e) => selectMovie(e.detail.item.accessKey as string, e.detail.item.innerText as string)}>
+                    {
+                        movieList.map((movie: any) => {
+                            return <StandardListItem key={movie.imdbID} accessKey={movie.imdbID}>{movie.Title}</StandardListItem>
+                        })
+                    }
+                </List> : <p style={{display: "none"}}/>
             }
         </div>
         <div className='movieSearcher-Body'>
